@@ -44,5 +44,10 @@ df <- rename(df, gender_fine = gender)
 summary(df)
 ```
 
+```{r Selectandfilter}
+filter(df, mort_12 < 18)
+filter(df, mort_12 < 3 & gender_fine == 1)
+select(df, age)
+```
 
 
