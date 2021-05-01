@@ -7,10 +7,28 @@ output: html_document
 
 ```{r libraries}
 library("tidyverse")
+library("haven")
 ```
 
 ```{r datadownloaded}
+df <- read_sav("mortality_workshop.sav")
+```
 
+```{r checkdata}
+## Number of Rows
+nrow(df)
+## Number of columns
+ncol(df)
+## Dimensionality of datafram/datamatrix
+dim(df)
+## Lists the variable names
+names(df)
+## Shows overview of dataframe (from tidyverse)
+glimpse(df)
+## lists the top cases and variable names
+head(df)
+## lists the class of data structure
+class(df)
 ```
 
 
