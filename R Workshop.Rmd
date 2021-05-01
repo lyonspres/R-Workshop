@@ -47,7 +47,16 @@ summary(df)
 ```{r Selectandfilter}
 filter(df, mort_12 < 18)
 filter(df, mort_12 < 3 & gender_fine == 1)
+## selecting by column:
 select(df, age)
+## also df$age
+## also df["age"]
+
+## Creating Columns
+df$id <- 1:nrow(df)
+
+df$extr <- rowMeans(df[c("bfi_1", "bfi_6", "bfi_11")],
+                    na.rm = T)
 ```
 
 
