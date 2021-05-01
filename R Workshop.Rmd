@@ -8,6 +8,10 @@ output: html_document
 ```{r libraries}
 library("tidyverse")
 library("haven")
+install.packages("psych")
+library("psych")
+library("dplyr")
+library("tidyr")
 ```
 
 ```{r datadownloaded}
@@ -29,7 +33,15 @@ glimpse(df)
 head(df)
 ## lists the class of data structure
 class(df)
+## summary
+summary(df)
 ```
 
+```{r reorganise}
+## Rename variables
+### (df, New name = Current Name)
+df <- rename(df, gender_fine = gender)
+summary(df)
+```
 
 
