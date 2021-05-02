@@ -55,8 +55,16 @@ select(df, age)
 ## Creating Columns
 df$id <- 1:nrow(df)
 
+## Na.rm takes the answers that it has, and creates an average, so that it doesn't assume a lack of an answer as an answer in itself
+
 df$extr <- rowMeans(df[c("bfi_1", "bfi_6", "bfi_11")],
                     na.rm = T)
+
+## Some basic cleaning help
+install.packages("careless")
+library("careless")
+longstring(df)
+hist(irv(df))
 ```
 
 
