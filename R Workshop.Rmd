@@ -400,13 +400,43 @@ psych::omega(df[leg])
 
 ```{r basictests}
 # Basic Statistical Tests
-## One Sample T-Tests
+
+## One Sample T-Test
 
 t.test(df$fea, mu = 2.5)
 
+## Independent Sample T-Test
+
 t.test(fea ~ gender_bin, df)
 
+## Paired Sample T-Test
 
+t.test(df$acc, df$fea, paired = T)
+
+## Effect Size
+
+library(effsize)
+cohen.d(df$fea ~ df$gender_bin)
+
+## MANOVA
+
+res_manova <- manova(cbind(leg, fea, acc, emp, eng) ~ gender_bin, data = df)
+summary(res_manova)
+report::report(res_manova)
+
+## ANOVA?
+
+aov1 <- aov(leg ~ gender_bin, df)
+summary(aov1)
+report::report(aov1)
+
+## Tukey Post Hoc
+
+TukeyHSD(aov1)
+
+library(sjstats)
+omega_sq(aov1, ci.lvl = .95)
+eta_sq(aov1, ci.lvl = .95)
 ```
 
 
