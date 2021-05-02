@@ -509,8 +509,48 @@ princ_1 <- principal(df[paste0("mort_", 1:36)],
                      rotate = "varimax")
 
 print.psych(princ_1, sort = T, cut = .40)
+
+## Loading on multiple columns evident
+
+library("bootnet")
+library("qgraph")
+library("EGAnet")
+library("RColorBrewer")
+library("networktools")
 ```
 
+```{r evenmoredata1234}
+df_short <- df[c(fea, emot_cont, prox_resp, peri_resp)]
+net_1 <- estimateNetwork(df_short, default = "EBICglasso")
+
+qgraph(net_1$graph, layout = "spring")
+
+bootEGA(df[c(fea, emot_cont, prox_resp, peri_resp)],
+                iter = 1000)
+
+
+
+key_df <- data.frame(number = 1:ncol(df_short),
+                     nodes = names(df_short),
+                     concept = c(rep("Fear", length(fea)),
+                                 rep("Aff", (length(emot_cont) +
+                                             length(prox_resp) +
+                                             length(peri_resp))))) 
+
+
+overall_graph <-qgraph(net_1$graph,
+                       labels = key_df$nodes,
+                       color = qual_colour(length(unique(key_df$concept))),
+                       groups = key_df$concept,
+                       layout = "spring"
+)
+
+bridge_node <- bridge(overall_graph, communities = overall_graph$Arguments$groups)
+
+
+MDSnet(overall_graph)
+EIGENnet(overall_graph)
+```
 
 
 
