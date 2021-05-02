@@ -404,6 +404,8 @@ psych::omega(df[leg])
 
 t.test(df$fea, mu = 2.5)
 
+t.test(fea ~ gender_bin, df)
+
 
 ```
 
