@@ -390,11 +390,13 @@ library("GPArotation")
 psych::omega(df[leg])
 
 ## Report alpha and omega and CI's
-
-
-
 ```
 
+```{r errorsandwarnings}
+# Debugging Errors
+
+## 1. weep until you can't weep anymore; 2. check the spelling of all variables; 3. check that all variables exist - try call the variable and see if it's there, trace it back; 4. ask someone to check the exact same things; 5. check the data types (do you expect a factor but didn't make one earlier); 6. read the documentation of the function; 7. Google; 8. ask a friend for help; 9. ask stack overflow; 10. Pester the package author on Github; 11. Pester them via email; 12. you misspelled a variable; 13. weep in shame
+```
 
 
 
