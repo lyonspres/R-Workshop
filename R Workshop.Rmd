@@ -67,4 +67,32 @@ longstring(df)
 hist(irv(df))
 ```
 
+```{r ongoingongoing}
+## Recording
+### Re-code the below column so the responses are logical, flipping around the data as we go essentially
 
+library(car)
+df$bfi_1 <- recode(df$bfi_1, "1 = 5; 2 = 4; 3 = 4; 4 = 2; 5= 1")
+
+## Data Types 
+
+## Vectors are unidimensional contructs of columns or rows as columns, can be numbers, symbols etc, and are hierarchically stacked (a - d) and unidirectional (Implicit Coercion) see below:
+
+###Logical Vector
+a <- c(TRUE, TRUE, FALSE)
+
+### Integer Vector
+b <- c(1L, 2L, 3L)
+
+### Double Vector
+
+c <- c()
+  
+### Complex Vecotr
+
+d <- c()
+  
+### Character Vector
+  
+e <- C()
+```
