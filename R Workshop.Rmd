@@ -117,6 +117,20 @@ h6[1:4]
 # Matrices
 
 ## Matrices are like Vectors, but cool, they're multi-dimensional "Chad-Vectors", m-by-n matrix is rectangular and come with rows and columns
+
+### need to say "byrow" so it fills left to right by row and not by prioritising columns
+
+### in square brackets: number comma == matrix row; comma number == matrix column
+
+## Data Frame
+
+dv1 <- c(TRUE,FALSE,TRUE)
+dv2 <- c(1,2,3)
+dv3 <- 
+  
+### Matrices can only have one data type, so it coerces hieracically like vectors do earlier - however data frames can be different data types:
+  
+cbind.data.frame(dv1,dv2,dv3)
 ```
 
 
