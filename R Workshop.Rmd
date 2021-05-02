@@ -384,6 +384,14 @@ df$affe_empa <-  rowMeans(df[c(emot_cont, prox_resp, peri_resp)], na.rm = T)
 
 psych::alpha(df[leg])
 
+### ALpha = .85, so 15% of the variation is random - < .8 is fine for exploratory research, you really need >.95 to make inferences about individuals. Try a new type of reliability:
+
+library("GPArotation")
+psych::omega(df[leg])
+
+## Report alpha and omega and CI's
+
+
 
 ```
 
