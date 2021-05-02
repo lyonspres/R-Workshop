@@ -96,5 +96,33 @@ d <- c()
   
 e <- C()
 
+## Manipulating Data in Vector
 
+h1 <- c(1,2,3)
+h2 <- c(4,5,6)
+
+h1 + h2
+h1 * h2
+
+### We can glue vectors together
+
+c(h1,h2)
+
+## Accessing Data in Vectors 
+
+h6 <- c(1,2,3,4,5,6)
+h6[1]
+h6[1:4]
+
+# Matrices
+
+## Matrices are like Vectors, but cool, they're multi-dimensional "Chad-Vectors", m-by-n matrix is rectangular and come with rows and columns
 ```
+
+
+
+
+
+
+
+
