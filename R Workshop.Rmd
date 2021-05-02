@@ -76,7 +76,7 @@ df$bfi_1 <- recode(df$bfi_1, "1 = 5; 2 = 4; 3 = 4; 4 = 2; 5= 1")
 
 ## Data Types 
 
-## Vectors are unidimensional contructs of columns or rows as columns, can be numbers, symbols etc, and are hierarchically stacked (a - d) and unidirectional (Implicit Coercion) see below:
+## Vectors are unidimensional contructs of columns or rows as columns, can be numbers, symbols etc, and are hierarchically stacked (a - d) and unidirectional (Implicit [chain of] Coercion) see below:
 
 ###Logical Vector
 a <- c(TRUE, TRUE, FALSE)
@@ -95,4 +95,6 @@ d <- c()
 ### Character Vector
   
 e <- C()
+
+
 ```
