@@ -464,9 +464,33 @@ mdl_sem <- '
     affe_empa ~ leg + fea + acc + emp + eng
     cogn_empa ~ leg + fea + acc + emp + eng
             '
-
+sem_res <- sem(mdl_sem, df,
+               se = "bootstrap")
+summary(sem_res, standardize = T)
 ```
 
+```{r moredatainsert}
+mdl_cfa <- 
+  '
+leg_lat =~ mort_1 + mort_2 + mort_3 + mort_4 + mort_5 + mort_6 + mort_7 + mort_8 + mort_9 + mort_10
+fea_lat =~ mort_11 + mort_12 + mort_13 + mort_14 + mort_15 + mort_16 + mort_17 + mort_18 + mort_19 + mort_20
+acc_lat =~ mort_21 + mort_22 + mort_23 + mort_24 + mort_25
+emp_lat =~ mort_26 + mort_27 + mort_28 + mort_29 + mort_30 + mort_31
+eng_lat =~ mort_32 + mort_33 + mort_34 + mort_35 + mort_36
+  
+  '
+
+mort_cfa <- cfa(mdl_cfa, df, std.lv = T, estimator = "MLR")
+
+summary(mort_cfa, fit = T)
+
+modificationindices(mort_cfa, sort. = T)
+```
+```{r CFA}
+## Confirmatory Factor Analysis
+
+
+```
 
 
 
