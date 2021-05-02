@@ -437,6 +437,34 @@ TukeyHSD(aov1)
 library(sjstats)
 omega_sq(aov1, ci.lvl = .95)
 eta_sq(aov1, ci.lvl = .95)
+
+## Correlation
+
+psych::corr.test(
+  df[c("leg", "fea", "acc", "emp", "eng")],
+  df[c("cogn_empa", "affe_empa")]
+)
+
+## Regression
+
+### Linear Regression
+
+lm_1 <- lm(affe_empa ~ leg + fea + acc + emp + eng, df)
+summary(lm_1)
+
+### High residuals is bad, as it's not explained by our linear line, so plot your data, if they're low you probably made an error
+### Standard error being too high or low is concerning too, they shuold be relatively uniform
+### Get the intercept and adjusted r-squared (how much predictors are explained when we multiply by 100) F-stat, df's, and p-value
+
+library(lavaan)
+
+## SEM
+
+mdl_sem <- '
+    affe_empa ~ leg + fea + acc + emp + eng
+    cogn_empa ~ leg + fea + acc + emp + eng
+            '
+
 ```
 
 
