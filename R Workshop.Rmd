@@ -131,6 +131,17 @@ dv3 <-
 ### Matrices can only have one data type, so it coerces hieracically like vectors do earlier - however data frames can be different data types:
   
 cbind.data.frame(dv1,dv2,dv3)
+
+## Factors 
+
+### R's way of saying yes this is a number, but those are not words, they're groups, e.g:
+
+df$gender_bin <- factor(df$gender_fine,
+                        levels = c(1,2)
+                        labels = c("male", "female"))
+
+## Summary
+### 3 forms of storage; vector, matrix, data frame
 ```
 
 
