@@ -378,6 +378,13 @@ df$affe_empa <-  rowMeans(df[c(emot_cont, prox_resp, peri_resp)], na.rm = T)
 
 ```{r reliabilitystats}
 # Reliability
+### How well are we measuring out construct in science/psych - that is, how well do the questions work that we ask
+
+### We colon colon to choose fromt he psych package, not another that uses alpha too
+
+psych::alpha(df[leg])
+
+
 ```
 
 
