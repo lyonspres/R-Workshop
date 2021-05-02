@@ -144,7 +144,241 @@ df$gender_bin <- factor(df$gender_fine,
 ### 3 forms of storage; vector, matrix, data frame
 ```
 
+```{r reliability}
+# Reliability, alpha's omega's
 
+qual_colour <- function(n){
+  qual_col_pals <- brewer.pal.info[brewer.pal.info$category == 'qual',]
+  col_vector <- unlist(mapply(brewer.pal, qual_col_pals$maxcolors,
+                              rownames(qual_col_pals)))
+  col <- sample(col_vector, n)
+  return(col)
+}
+
+library(tidyverse)
+df <- haven::read_sav("mortality_workshop.sav")
+
+
+
+# Renaming ----------------------------------------------------------------
+
+df <- rename(df, gender_fine = gender)
+### Demographics
+df$gender_bin <- factor(df$gender_fine, levels = c(1,2), labels = c("male", "female"))
+
+df$id <- paste0("id_", 1:nrow(df))
+# Filtering ---------------------------------------------------------------
+
+filter(df, mort_12 < 3)
+
+# Empathy -----------------------------------------------------------------
+
+emp_recod <- paste0("qace_", c(1, 2, 17, 29))
+
+df[,emp_recod] <- lapply(df[,emp_recod],
+                        function(x){car::recode(x,
+                                                "1 = 4; 2 = 3; 3 = 2; 4 = 1")})
+## Cognitive
+pers_take <- paste0("qace_", c(15, 16, 19, 20, 21, 22, 24, 25, 26, 27))
+onli_simu <- paste0("qace_", c(1, 3, 4, 5, 6, 18, 28, 30, 31))
+
+# Affective
+emot_cont <- paste0("qace_", c(8, 9, 13, 14))
+prox_resp <- paste0("qace_", c(7, 10, 12, 23))
+peri_resp <- paste0("qace_", c(2, 11, 17, 29))
+
+
+
+# Personality  http://www.colby.edu/psych/wp-content/uploads/sites/50/2013/08/bfi2s-form.pdf--
+
+pers_rcd <- paste0("bfi_", c(1, 7, 3, 8, 14, 10)) 
+df[,pers_rcd] <- lapply(df[,pers_rcd],
+                        function(x){
+                          car::recode(x, "1 = 5; 2 = 4; 3 = 3; 4 = 2; 5 = 1")})
+
+
+df[pers_rcd] <- 6 - df[pers_rcd]
+extr <- paste0("bfi_", c(1, 6, 11))
+agre <- paste0("bfi_", c(2, 7, 12))
+cons <- paste0("bfi_", c(3,8, 13))
+neur <- paste0("bfi_", c(4, 9, 14))
+open <- paste0("bfi_", c(5, 10, 15))
+
+# Mortality ---------------------------------------------------------------
+
+leg <- paste0("mort_", 1:10)
+fea <- paste0("mort_", 11:20)
+acc <- paste0("mort_", 21:25)
+emp <- paste0("mort_", 26:31)
+eng <- paste0("mort_", 32:36)
+
+
+
+# Monoism-Dualism ---------------------------------------------------------
+## Fixing qualtrics
+
+mind_rcd_all <- paste0("mind_", 1:25)
+
+df[,mind_rcd_all] <- lapply(df[,mind_rcd_all],
+                            function(x){car::recode(x, "18 = 1; 19 = 2; 20 = 3;
+                                                           21 = 4; 22 = 5")})
+
+## Recoding reversed items
+mind_rcd <- paste0("mind_", c(10,11))
+
+df[,mind_rcd] <- lapply(df[,mind_rcd],
+                        function(x){car::recode(x,
+                                                "1 = 5; 2 = 4; 3 = 3; 4 = 2; 5 = 1")})
+
+
+dual <- paste0("mind_", 1:12)
+emer <- paste0("mind_", 13:18)
+moni <- paste0("mind_", 19:25)
+
+
+
+# Values ------------------------------------------------------------------
+
+
+#SELF-DIRECTION
+df$SDIR <- rowMeans(df[c("pvq1_1","pvq2_4","pvq3_1",
+                         "pvq1_16", "pvq2_11", "pvq3_18")])
+
+#AOT 
+df$AOT <- rowMeans(df[c("pvq1_1","pvq2_4","pvq3_1")])
+
+#AOA
+df$AOA <- rowMeans(df[c("pvq1_16", "pvq2_11", "pvq3_18")])
+
+#Stimulation:
+df$STIM <- rowMeans(df[c("pvq1_10", "pvq2_9", "pvq3_5")])
+
+#Hedonism
+df$HEDON <- rowMeans(df[c("pvq1_3", "pvq2_17", "pvq3_8")])
+
+#Achievement
+df$ACHIE <- rowMeans(df[c("pvq1_17", "pvq2_13", "pvq3_10")])
+
+#Power
+
+df$POWER <- rowMeans(df[c("pvq1_6","pvq2_10","pvq3_3",
+                          "pvq1_12","pvq2_1","pvq3_6")])
+#Dominance over people
+df$DOM <- rowMeans(df[c("pvq1_6","pvq2_10","pvq3_3")])
+
+#Resources
+df$RES <- rowMeans(df[c("pvq1_12","pvq2_1","pvq3_6")])
+
+#Face
+df$FAC <- rowMeans(df[c("pvq1_9","pvq2_5","pvq3_11")])
+
+#Security
+
+df$SECU <- rowMeans(df[c("pvq1_2", "pvq2_16", "pvq3_12",
+                         "pvq1_13", "pvq2_7", "pvq3_15")])
+
+#Societal
+df$SOC <- rowMeans(df[c("pvq1_2", "pvq2_16", "pvq3_12")])
+
+#Personal
+df$PER <- rowMeans(df[c("pvq1_13", "pvq2_7", "pvq3_15")])
+
+#Tradition
+df$TRA <- rowMeans(df[c("pvq1_18", "pvq2_14", "pvq3_2")])
+
+#Conformity
+
+df$CONF <- rowMeans(df[c("pvq1_15", "pvq2_12", "pvq3_4",
+                         "pvq1_4", "pvq2_3", "pvq3_13")])
+
+
+#Rules
+df$RUL <- rowMeans(df[c("pvq1_15", "pvq2_12", "pvq3_4")])
+
+#Interpersonal
+df$INT <- rowMeans(df[c("pvq1_4", "pvq2_3", "pvq3_13")])
+
+
+#Humility
+df$HUM <- rowMeans(df[c("pvq1_7", "pvq2_19", "pvq3_16")])
+
+
+
+#Benevolence
+
+df$BEN <- rowMeans(df[c("pvq1_19", "pvq2_8", "pvq3_17",
+                        "pvq1_11", "pvq2_6", "pvq3_9")])
+
+
+#Dependability
+df$DEP <- rowMeans(df[c("pvq1_19", "pvq2_8", "pvq3_17")])
+
+
+#Caring
+df$CAR <- rowMeans(df[c("pvq1_11", "pvq2_6", "pvq3_9")])
+
+
+#Universalism
+
+df$UNIVERS <- rowMeans(df[c("pvq1_5", "pvq2_18", "pvq3_14",
+                            "pvq1_8", "pvq2_2", "pvq3_7",
+                            "pvq1_14", "pvq2_15", "pvq3_19")])
+
+
+#Concern
+
+df$CONC <- rowMeans(df[c("pvq1_5", "pvq2_18", "pvq3_14")])
+
+#Nature
+df$NATU <- rowMeans(df[c("pvq1_8", "pvq2_2", "pvq3_7")])
+
+
+#Tolerance
+df$TOL <- rowMeans(df[c("pvq1_14", "pvq2_15", "pvq3_19")])
+
+#Self-Transcendence
+df$ST <- rowMeans(df[c("CONC","NATU","TOL","CAR","DEP")])
+
+#Self-Enhanchment
+df$SE <- rowMeans(df[c("ACHIE","DOM","RES")])
+
+#Openness to change
+df$OP <- rowMeans(df[c("AOT","AOA","STIM","HEDON")])
+
+#Conservation
+df$CON <- rowMeans(df[c("SOC","PER","TRA","RUL","INT")])
+
+
+df$values_mean <- rowMeans(df[c("ST", "SE", "OP", "CON")])
+
+### Creating the means
+df <- mutate(df,
+             extr = rowMeans(df[extr], na.rm = T),
+             agre = rowMeans(df[agre], na.rm = T),
+             cons = rowMeans(df[cons], na.rm = T),
+             neur = rowMeans(df[neur], na.rm = T),
+             open = rowMeans(df[open], na.rm = T),
+             leg = rowMeans(df[leg], na.rm = T),
+             fea = rowMeans(df[fea], na.rm = T),
+             acc = rowMeans(df[acc], na.rm = T),
+             emp = rowMeans(df[emp], na.rm = T),
+             eng = rowMeans(df[eng], na.rm = T),
+             dual = rowMeans(df[dual], na.rm = T),
+             emer = rowMeans(df[emer], na.rm = T),
+             moni = rowMeans(df[moni], na.rm = T),
+             pers_take = rowMeans(df[pers_take], na.rm = T),
+             onli_simu = rowMeans(df[onli_simu], na.rm = T),
+             emot_cont = rowMeans(df[emot_cont], na.rm = T),
+             prox_resp = rowMeans(df[prox_resp], na.rm = T),
+             peri_resp = rowMeans(df[peri_resp], na.rm = T))
+
+df$cogn_empa <- rowMeans(df[c(pers_take, onli_simu)], na.rm = T)
+df$affe_empa <-  rowMeans(df[c(emot_cont, prox_resp, peri_resp)], na.rm = T)
+```
+
+```{r reliabilitystats}
+# Reliability
+```
 
 
 
