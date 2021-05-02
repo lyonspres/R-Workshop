@@ -489,7 +489,26 @@ modificationindices(mort_cfa, sort. = T)
 ```{r CFA}
 ## Confirmatory Factor Analysis
 
+mort_cfa <- cfa(mdl_cfa, df, std.lv = T,
+                estimator = "MLR")
+summary(mort_cfa, fit = T)
 
+modificationindices(mort_cfa, sort. = T)
+
+### Herein, don't parcel the model, it's not imperially and empirically useful or effective
+
+## Dimension Reduction (Factor Analysis)
+
+### don't do the eigenvalue > 1 method, do an exploratory graph analysis instead
+
+fa.parallel(df[paste0("mort_", 1:36)],
+               n.iter = 1000)
+
+princ_1 <- principal(df[paste0("mort_", 1:36)],
+                     nfactors = 5,
+                     rotate = "varimax")
+
+print.psych(princ_1, sort = T, cut = .40)
 ```
 
 
